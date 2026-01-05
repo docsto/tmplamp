@@ -4,12 +4,6 @@ import { ArrowRight, Briefcase } from 'lucide-react';
 import heroVideo from '@/assets/hero-construction-video.mp4';
 
 const HeroSection = () => {
-  const stats = [
-    { value: '150+', label: 'Проектов завершено' },
-    { value: '5021+', label: 'Довольных клиентов' },
-    { value: '201+', label: 'Экспертов в команде' },
-  ];
-
   return (
     <section className="relative min-h-[90vh] flex items-center overflow-hidden">
       {/* Background Video */}
@@ -47,7 +41,7 @@ const HeroSection = () => {
               Создаём проекты, которые понятны, продуманы и доведены до результата в срок. Гарантируем системный контроль и полную прозрачность на каждом этапе — от частного строительства до промышленных объектов.
             </p>
 
-            <div className="flex flex-wrap gap-4 mb-12">
+            <div className="flex flex-wrap gap-4">
               <Button variant="hero" size="xl" asChild>
                 <a href="#contact">
                   Рассчитать проект
@@ -60,26 +54,6 @@ const HeroSection = () => {
                   Смотреть кейсы
                 </a>
               </Button>
-            </div>
-
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-6">
-              {stats.map((stat, index) => (
-                <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
-                  className="text-center lg:text-left"
-                >
-                  <div className="text-3xl md:text-4xl font-bold text-secondary mb-1">
-                    {stat.value}
-                  </div>
-                  <div className="text-primary-foreground/70 text-sm">
-                    {stat.label}
-                  </div>
-                </motion.div>
-              ))}
             </div>
           </motion.div>
         </div>
