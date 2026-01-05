@@ -1,13 +1,13 @@
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Play } from 'lucide-react';
+import { ArrowRight, Briefcase } from 'lucide-react';
 import heroVideo from '@/assets/hero-construction-video.mp4';
 
 const HeroSection = () => {
   const stats = [
-    { value: '150+', label: 'Projects Completed' },
-    { value: '5021+', label: 'Happy Clients' },
-    { value: '201+', label: 'Expert Workers' },
+    { value: '150+', label: 'Проектов завершено' },
+    { value: '5021+', label: 'Довольных клиентов' },
+    { value: '201+', label: 'Экспертов в команде' },
   ];
 
   return (
@@ -38,24 +38,27 @@ const HeroSection = () => {
             transition={{ duration: 0.8 }}
           >
             <span className="inline-block bg-secondary text-secondary-foreground px-4 py-2 rounded-full text-sm font-semibold mb-6">
-              #1 Builder Company
+              Проектная компания №1
             </span>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground leading-tight mb-6">
-              Building Your <span className="text-secondary">Dreams</span> Into Reality
+              Проектируем как надо. <span className="text-secondary">Чтобы строить уверенно</span>
             </h1>
             <p className="text-primary-foreground/80 text-lg mb-8 max-w-lg">
-              We analyze each plan and offer optimal solutions. With 25+ years of experience, 
-              we deliver world-class construction services that exceed expectations.
+              Создаём проекты, которые понятны, продуманы и доведены до результата в срок. Гарантируем системный контроль и полную прозрачность на каждом этапе — от частного строительства до промышленных объектов.
             </p>
 
             <div className="flex flex-wrap gap-4 mb-12">
-              <Button variant="hero" size="xl">
-                Get Started
-                <ArrowRight className="w-5 h-5" />
+              <Button variant="hero" size="xl" asChild>
+                <a href="#contact">
+                  Рассчитать проект
+                  <ArrowRight className="w-5 h-5" />
+                </a>
               </Button>
-              <Button variant="heroOutline" size="xl">
-                <Play className="w-5 h-5" />
-                Watch Video
+              <Button variant="heroOutline" size="xl" asChild>
+                <a href="#why-choose-us">
+                  <Briefcase className="w-5 h-5" />
+                  Смотреть кейсы
+                </a>
               </Button>
             </div>
 
