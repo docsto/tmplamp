@@ -7,10 +7,10 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navItems = [
-    { label: 'Для бизнеса', href: '#business' },
-    { label: 'Частным клиентам', href: '#private' },
+    { label: 'Для бизнеса', href: '#why-choose-us' },
+    { label: 'Частным клиентам', href: '#testimonials' },
     { label: 'Услуги', href: '#services' },
-    { label: 'Процесс', href: '#process' },
+    { label: 'Процесс', href: '#about' },
     { label: 'Контакты', href: '#contact' },
   ];
 

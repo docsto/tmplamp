@@ -30,7 +30,7 @@ const TestimonialsSection = () => {
   ];
 
   return (
-    <section className="py-20 bg-primary relative overflow-hidden">
+    <section id="testimonials" className="py-20 bg-primary relative overflow-hidden scroll-mt-24">
       {/* Background Pattern */}
       <div className="absolute inset-0 stripe-pattern opacity-10" />
       

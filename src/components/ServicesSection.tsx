@@ -102,11 +102,12 @@ const ServicesSection = () => {
 
         {/* Service Areas */}
         <motion.div
+          id="why-choose-us"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="bg-muted rounded-2xl p-8 md:p-12"
+          className="bg-muted rounded-2xl p-8 md:p-12 scroll-mt-24"
         >
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
