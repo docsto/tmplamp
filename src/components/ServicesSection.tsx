@@ -32,8 +32,7 @@ const ServicesSection = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="text-secondary font-semibold uppercase tracking-wider">Наши услуги</span>
-          <h2 className="section-title mt-2">
+          <h2 className="section-title">
             Проектируем для вашего масштаба
           </h2>
         </motion.div>
