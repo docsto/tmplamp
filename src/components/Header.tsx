@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Menu, X, Phone, Mail, Clock, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import logo from '@/assets/logo.svg';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -47,13 +48,8 @@ const Header = () => {
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center">
             {/* Logo */}
-            <a href="#" className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center">
-                <span className="text-secondary-foreground font-bold text-xl">B</span>
-              </div>
-              <span className="text-2xl font-bold text-primary">
-                Build<span className="text-secondary">entia</span>
-              </span>
+            <a href="#" className="flex items-center">
+              <img src={logo} alt="Логотип" className="h-10 w-auto" />
             </a>
 
             {/* Desktop Navigation */}
