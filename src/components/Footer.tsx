@@ -1,4 +1,5 @@
 import { Phone, Mail, ArrowUp } from 'lucide-react';
+import logo from '@/assets/logo.svg';
 
 const Footer = () => {
   const scrollToTop = () => {
@@ -18,13 +19,8 @@ const Footer = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
           {/* Company Info */}
           <div className="lg:col-span-1">
-            <a href="#" className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center">
-                <span className="text-secondary-foreground font-bold text-xl">A</span>
-              </div>
-              <span className="text-2xl font-bold text-primary-foreground">
-                АртМонолит<span className="text-secondary">Проект</span>
-              </span>
+            <a href="#" className="flex items-center mb-4">
+              <img src={logo} alt="АртМонолитПроект" className="h-8 w-auto brightness-0 invert" />
             </a>
             <p className="text-secondary font-medium text-lg mb-4">
               Проектируем как надо
