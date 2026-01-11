@@ -23,21 +23,21 @@ const Header = () => {
           <div className="flex items-center gap-6 flex-wrap">
             <div className="flex items-center gap-2">
               <Phone className="w-4 h-4 text-secondary" />
-              <span>+1 800 250 389</span>
+              <a href="tel:+77053210526" className="hover:text-secondary transition-colors">8-705-321-05-26</a>
             </div>
             <div className="flex items-center gap-2">
               <Mail className="w-4 h-4 text-secondary" />
-              <span>info@buildentia.com</span>
+              <a href="mailto:amp_sko@mail.ru" className="hover:text-secondary transition-colors">amp_sko@mail.ru</a>
             </div>
           </div>
           <div className="hidden md:flex items-center gap-6">
             <div className="flex items-center gap-2">
               <Clock className="w-4 h-4 text-secondary" />
-              <span>Mon - Fri: 8:00 AM - 6:00 PM</span>
+              <span>Пн - Пт: 09:00 - 18:00</span>
             </div>
             <div className="flex items-center gap-2">
               <MapPin className="w-4 h-4 text-secondary" />
-              <span>123 Builder Street, NY</span>
+              <span>ул. Пушкина, д. 134А</span>
             </div>
           </div>
         </div>
