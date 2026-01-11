@@ -54,19 +54,19 @@ const Footer = () => {
               <li className="flex items-center gap-3">
                 <Phone className="w-5 h-5 text-secondary" />
                 <a 
-                  href="tel:+77001234567" 
+                  href="tel:+77053210526" 
                   className="text-primary-foreground/70 hover:text-secondary transition-colors duration-300"
                 >
-                  +7 700 123 45 67
+                  8-705-321-05-26
                 </a>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-secondary" />
                 <a 
-                  href="mailto:info@artmonolitproekt.kz" 
+                  href="mailto:amp_sko@mail.ru" 
                   className="text-primary-foreground/70 hover:text-secondary transition-colors duration-300"
                 >
-                  info@artmonolitproekt.kz
+                  amp_sko@mail.ru
                 </a>
               </li>
             </ul>
