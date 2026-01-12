@@ -47,12 +47,6 @@ const PrivateProjectsSection = () => {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <Home className="h-6 w-6 text-primary" />
-            <span className="text-primary font-medium uppercase tracking-wider text-sm">
-              Частные объекты
-            </span>
-          </div>
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             Проекты частных домов и малых объектов
           </h2>
