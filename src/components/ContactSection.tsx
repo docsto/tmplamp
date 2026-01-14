@@ -1,54 +1,11 @@
 import { motion } from 'framer-motion';
-import { Phone, Mail, MapPin, Clock, Send, MessageSquare, FileText, Users } from 'lucide-react';
+import { Phone, Mail, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const ContactSection = () => {
-  const workingProcess = [
-    { icon: FileText, title: 'Planning', description: 'Initial consultation and project planning' },
-    { icon: MessageSquare, title: 'Connect with us', description: 'Discuss your requirements in detail' },
-    { icon: Users, title: 'Physical Visit', description: 'Site assessment and measurements' },
-    { icon: Send, title: 'Get your dream', description: 'Project execution and delivery' },
-  ];
-
   return (
     <section id="contact" className="py-20 bg-background">
       <div className="container mx-auto px-4">
-        {/* Working Process */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <span className="text-secondary font-semibold uppercase tracking-wider">How It Works</span>
-          <h2 className="section-title mt-2">
-            We Have Some Easy<br />Working Procedure
-          </h2>
-        </motion.div>
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
-          {workingProcess.map((step, index) => (
-            <motion.div
-              key={step.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="text-center relative"
-            >
-              <div className="w-20 h-20 bg-secondary rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-gold">
-                <step.icon className="w-10 h-10 text-secondary-foreground" />
-              </div>
-              <div className="absolute top-8 left-[calc(50%+40px)] w-[calc(100%-80px)] h-0.5 bg-border hidden lg:block" style={{ display: index === 3 ? 'none' : undefined }} />
-              <span className="inline-block bg-primary text-primary-foreground w-8 h-8 rounded-full text-sm font-bold leading-8 mb-4">
-                {index + 1}
-              </span>
-              <h3 className="text-xl font-bold text-foreground mb-2">{step.title}</h3>
-              <p className="text-muted-foreground">{step.description}</p>
-            </motion.div>
-          ))}
-        </div>
 
         {/* Contact Form */}
         <motion.div
