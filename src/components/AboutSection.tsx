@@ -72,7 +72,6 @@ const AboutSection = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="group relative bg-white rounded-2xl p-8 border border-slate-200 shadow-sm overflow-hidden"
-              style={{ backgroundImage: blueprintPattern }}
             >
               {/* Icon with hover effect */}
               <motion.div 
@@ -102,7 +101,6 @@ const AboutSection = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.3 }}
             className="group relative bg-white rounded-2xl p-8 border border-slate-200 shadow-sm overflow-hidden"
-            style={{ backgroundImage: blueprintPattern }}
           >
             {/* Icon with hover effect */}
             <motion.div 
@@ -128,9 +126,6 @@ const AboutSection = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.4 }}
             className="group md:col-span-2 relative bg-white rounded-2xl p-8 border border-slate-200 shadow-sm overflow-hidden"
-            style={{ 
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23CBD5E1' stroke-width='0.5' opacity='0.4'%3E%3Cpath d='M0 25h100M0 50h100M0 75h100M25 0v100M50 0v100M75 0v100'/%3E%3Ccircle cx='50' cy='50' r='20'/%3E%3Cpath d='M30 50h40M50 30v40'/%3E%3C/g%3E%3C/svg%3E")`,
-            }}
           >
             <div className="flex flex-col md:flex-row md:items-start gap-6">
               {/* Icon and Title */}
