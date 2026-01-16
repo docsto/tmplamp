@@ -54,7 +54,7 @@ const AboutSection = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            Полный цикл проектных работ
+            От эскиза до надзора: полный цикл услуг
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
             От концепции до авторского надзора. Работаем как комплексно, так и по отдельным этапам.
@@ -71,32 +71,24 @@ const AboutSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="relative bg-white rounded-2xl p-8 border border-slate-200 shadow-sm overflow-hidden"
+              className="group relative bg-white rounded-2xl p-8 border border-slate-200 shadow-sm overflow-hidden"
               style={{ backgroundImage: blueprintPattern }}
             >
-              {/* Icon */}
-              <div className="w-14 h-14 border-2 border-secondary rounded-xl flex items-center justify-center mb-6">
-                <service.icon className="w-6 h-6 text-secondary" strokeWidth={1.5} />
-              </div>
+              {/* Icon with hover effect */}
+              <motion.div 
+                className="w-14 h-14 border-2 border-secondary rounded-xl flex items-center justify-center mb-6 transition-all duration-300 group-hover:bg-secondary group-hover:border-secondary"
+                whileHover={{ scale: 1.1, rotate: 5 }}
+              >
+                <service.icon className="w-6 h-6 text-secondary transition-colors duration-300 group-hover:text-white" strokeWidth={1.5} />
+              </motion.div>
 
               {/* Title */}
               <h3 className="text-xl font-bold text-foreground mb-4">{service.title}</h3>
 
               {/* Description */}
-              <p className="text-muted-foreground text-sm leading-relaxed mb-6">
+              <p className="text-muted-foreground text-sm leading-relaxed">
                 {service.description}
               </p>
-
-              {/* Button */}
-              {service.buttonText && (
-                <Button 
-                  variant="outline" 
-                  className="bg-slate-800 text-white border-slate-800 hover:bg-slate-700 hover:text-white"
-                >
-                  {service.buttonText}
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Button>
-              )}
             </motion.div>
           ))}
         </div>
@@ -109,13 +101,16 @@ const AboutSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="relative bg-white rounded-2xl p-8 border border-slate-200 shadow-sm overflow-hidden"
+            className="group relative bg-white rounded-2xl p-8 border border-slate-200 shadow-sm overflow-hidden"
             style={{ backgroundImage: blueprintPattern }}
           >
-            {/* Icon */}
-            <div className="w-14 h-14 border-2 border-secondary rounded-xl flex items-center justify-center mb-6">
-              <Calculator className="w-6 h-6 text-secondary" strokeWidth={1.5} />
-            </div>
+            {/* Icon with hover effect */}
+            <motion.div 
+              className="w-14 h-14 border-2 border-secondary rounded-xl flex items-center justify-center mb-6 transition-all duration-300 group-hover:bg-secondary group-hover:border-secondary"
+              whileHover={{ scale: 1.1, rotate: 5 }}
+            >
+              <Calculator className="w-6 h-6 text-secondary transition-colors duration-300 group-hover:text-white" strokeWidth={1.5} />
+            </motion.div>
 
             {/* Title */}
             <h3 className="text-xl font-bold text-foreground mb-4">Сметная документация</h3>
@@ -132,7 +127,7 @@ const AboutSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="md:col-span-2 relative bg-white rounded-2xl p-8 border border-slate-200 shadow-sm overflow-hidden"
+            className="group md:col-span-2 relative bg-white rounded-2xl p-8 border border-slate-200 shadow-sm overflow-hidden"
             style={{ 
               backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23CBD5E1' stroke-width='0.5' opacity='0.4'%3E%3Cpath d='M0 25h100M0 50h100M0 75h100M25 0v100M50 0v100M75 0v100'/%3E%3Ccircle cx='50' cy='50' r='20'/%3E%3Cpath d='M30 50h40M50 30v40'/%3E%3C/g%3E%3C/svg%3E")`,
             }}
@@ -140,9 +135,12 @@ const AboutSection = () => {
             <div className="flex flex-col md:flex-row md:items-start gap-6">
               {/* Icon and Title */}
               <div className="flex items-center gap-4">
-                <div className="w-14 h-14 border-2 border-secondary rounded-xl flex items-center justify-center flex-shrink-0">
-                  <Eye className="w-6 h-6 text-secondary" strokeWidth={1.5} />
-                </div>
+                <motion.div 
+                  className="w-14 h-14 border-2 border-secondary rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:bg-secondary group-hover:border-secondary"
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                >
+                  <Eye className="w-6 h-6 text-secondary transition-colors duration-300 group-hover:text-white" strokeWidth={1.5} />
+                </motion.div>
                 <h3 className="text-xl font-bold text-foreground md:hidden">Авторский надзор</h3>
               </div>
 
