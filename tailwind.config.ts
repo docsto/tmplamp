@@ -68,6 +68,7 @@ export default {
           light: "hsl(var(--gold-light))",
         },
         "button-quote": "hsl(var(--button-quote))",
+        "button-quote-hover": "hsl(var(--button-quote-hover))",
       },
       fontFamily: {
         sans: ['Montserrat', 'sans-serif'],
