@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Menu, X, Phone, Mail, Clock, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import logo from '@/assets/logo.svg';
+import logo from '@/assets/logo-new.png';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -49,7 +49,7 @@ const Header = () => {
           <div className="flex justify-between items-center">
             {/* Logo */}
             <a href="#" className="flex items-center">
-              <img src={logo} alt="Логотип" className="h-10 w-auto" />
+              <img src={logo} alt="АртМонолитПроект" className="h-12 w-auto" />
             </a>
 
             {/* Desktop Navigation */}
