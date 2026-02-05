@@ -67,6 +67,7 @@ export default {
           dark: "hsl(var(--gold-dark))",
           light: "hsl(var(--gold-light))",
         },
+        "button-quote": "hsl(var(--button-quote))",
       },
       fontFamily: {
         sans: ['Montserrat', 'sans-serif'],
