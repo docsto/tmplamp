@@ -16,6 +16,7 @@
     --popover-foreground: 220 40% 13%;
 
     --primary: 226 56% 24%;
+    --primary: 220 100% 30%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 45 96% 53%;
@@ -37,9 +38,9 @@
     --radius: 0.5rem;
 
     /* Custom construction theme colors */
-    --navy: 226 56% 24%;
-    --navy-dark: 226 60% 18%;
-    --navy-light: 226 50% 35%;
+    --navy: 220 100% 30%;
+    --navy-dark: 220 100% 22%;
+    --navy-light: 220 100% 40%;
     --gold: 45 96% 53%;
     --gold-dark: 45 96% 45%;
     --gold-light: 45 96% 65%;
