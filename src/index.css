@@ -161,6 +161,30 @@
     );
   }
 
+  /* Blueprint to Reality hero effect */
+  .blueprint-overlay {
+    background: linear-gradient(
+      to right,
+      hsl(var(--navy-dark) / 0.95) 0%,
+      hsl(var(--navy-dark) / 0.92) 25%,
+      hsl(var(--navy) / 0.85) 40%,
+      hsl(var(--navy) / 0.55) 55%,
+      hsl(var(--navy) / 0.15) 70%,
+      transparent 85%
+    );
+  }
+
+  .blueprint-grid {
+    background-image:
+      linear-gradient(hsl(200 80% 70% / 0.4) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(200 80% 70% / 0.4) 1px, transparent 1px),
+      linear-gradient(hsl(200 80% 70% / 0.15) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(200 80% 70% / 0.15) 1px, transparent 1px);
+    background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+    mask-image: linear-gradient(to right, black 0%, black 45%, transparent 70%);
+    -webkit-mask-image: linear-gradient(to right, black 0%, black 45%, transparent 70%);
+  }
+
   .text-gradient {
     background: linear-gradient(135deg, hsl(var(--gold)) 0%, hsl(var(--gold-light)) 100%);
     -webkit-background-clip: text;
