@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, ShieldCheck, Calendar, Building2, CheckCircle2, AlertTriangle, FolderOpen } from 'lucide-react';
+import { ArrowRight, ShieldCheck, Calendar, Building2, CheckCircle2, Briefcase } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import heroImage from '@/assets/hero-construction-site.jpg';
 
@@ -38,10 +38,8 @@ const HeroSection = () => {
             className="space-y-6"
           >
             {/* Main Heading */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] xl:text-6xl font-extrabold text-primary-foreground leading-[1.1]">
-              Проектируем как надо.
-              <br />
-              <span className="text-secondary">Чтобы строить уверенно</span>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-primary-foreground leading-[1.1]">
+              Проектируем как надо. <span className="text-secondary">Чтобы строить уверенно</span>
             </h1>
 
             {/* Subtitle */}
@@ -97,33 +95,18 @@ const HeroSection = () => {
             >
               <Button variant="hero" size="xl" asChild>
                 <a href="#contact">
-                  <Calendar className="w-5 h-5" />
-                  Получить расчёт проекта за 24 часа
+                  Рассчитать проект
                   <ArrowRight className="w-5 h-5" />
                 </a>
               </Button>
               <Button variant="heroOutline" size="xl" asChild>
                 <a href="#why-choose-us">
-                  <FolderOpen className="w-5 h-5" />
-                  Посмотреть реализованные объекты
+                  <Briefcase className="w-5 h-5" />
+                  Смотреть кейсы
                 </a>
               </Button>
             </motion.div>
 
-            {/* Warning block */}
-            <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.75 }}
-              className="flex items-start gap-3 pt-2"
-            >
-              <AlertTriangle className="w-5 h-5 text-secondary flex-shrink-0 mt-0.5" />
-              <p className="text-primary-foreground/70 text-sm leading-relaxed">
-                <span className="text-secondary font-bold">90% проблем</span> на стройке — из-за ошибок в проекте.
-                <br className="hidden sm:block" />
-                Мы устраняем их до начала строительства.
-              </p>
-            </motion.div>
           </motion.div>
 
           {/* Right side is empty — shows through to the construction photo */}
