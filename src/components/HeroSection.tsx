@@ -43,7 +43,7 @@ const HeroSection = () => {
             </h1>
 
             {/* Subtitle */}
-            <p className="text-primary-foreground/80 text-base sm:text-lg max-w-lg leading-relaxed">
+            <p className="text-primary-foreground/80 text-base sm:text-lg max-w-lg leading-relaxed font-medium">
               Создаём проекты, которые понятны, продуманы
               и доведены до результата в срок.
             </p>
@@ -78,7 +78,7 @@ const HeroSection = () => {
                     <span className="text-primary-foreground font-extrabold text-lg sm:text-xl leading-none">
                       {stat.value}
                     </span>
-                    <span className="text-primary-foreground/70 text-xs sm:text-sm ml-1.5">
+                    <span className="text-primary-foreground/70 text-xs sm:text-sm ml-1.5 font-medium">
                       {stat.label}
                     </span>
                   </div>
