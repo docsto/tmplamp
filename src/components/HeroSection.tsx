@@ -38,7 +38,7 @@ const HeroSection = () => {
             className="space-y-6"
           >
             {/* Main Heading */}
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-primary-foreground leading-[1.1]">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-primary-foreground leading-[1.1]" style={{ fontFamily: "'Montserrat', sans-serif" }}>
               Проектируем как надо. <span className="text-secondary">Чтобы строить уверенно</span>
             </h1>
 
