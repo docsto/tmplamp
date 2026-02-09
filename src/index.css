@@ -125,14 +125,14 @@
   }
 }
 
-/* Custom cursor: hide default on nav hover targets */
-[data-cursor-hover] {
-  cursor: none;
+/* Custom cursor: hide default system cursor everywhere */
+*, *::before, *::after {
+  cursor: none !important;
 }
 
 @media (pointer: coarse) {
-  [data-cursor-hover] {
-    cursor: pointer;
+  *, *::before, *::after {
+    cursor: auto !important;
   }
 }
 
