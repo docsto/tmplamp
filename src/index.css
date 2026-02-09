@@ -125,6 +125,17 @@
   }
 }
 
+/* Custom cursor: hide default on nav hover targets */
+[data-cursor-hover] {
+  cursor: none;
+}
+
+@media (pointer: coarse) {
+  [data-cursor-hover] {
+    cursor: pointer;
+  }
+}
+
 @layer components {
   .section-title {
     @apply text-3xl md:text-4xl font-bold text-primary mb-4;

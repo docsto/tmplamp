@@ -58,6 +58,7 @@ const Header = () => {
                 <a
                   key={item.label}
                   href={item.href}
+                  data-cursor-hover
                   className="text-foreground font-medium hover:text-secondary transition-colors duration-300"
                 >
                   {item.label}
@@ -95,6 +96,7 @@ const Header = () => {
                   <a
                     key={item.label}
                     href={item.href}
+                    data-cursor-hover
                     className="text-foreground font-medium hover:text-secondary transition-colors duration-300"
                     onClick={() => setIsMenuOpen(false)}
                   >
