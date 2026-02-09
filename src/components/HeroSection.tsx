@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, ShieldCheck, Calendar, Building2, CheckCircle2, Briefcase, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight, ShieldCheck, Calendar, Building2, CheckCircle2, Briefcase, ChevronLeft, ChevronRight, AlertTriangle, FolderOpen } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import heroImage1 from '@/assets/hero-construction-site.jpg';
 import heroVideo from '@/assets/hero-construction-video.mp4';
@@ -19,9 +19,9 @@ const slides: Slide[] = [
 ];
 
 const stats = [
-  { icon: CheckCircle2, value: '13', label: 'лет на рынке' },
-  { icon: Building2, value: '350+', label: 'проектов' },
-  { icon: CheckCircle2, value: '100%', label: 'положительных экспертиз' },
+  { icon: CheckCircle2, value: '15+', label: 'лет опыта' },
+  { icon: Building2, value: '300+', label: 'проектов' },
+  { icon: CheckCircle2, label: 'Экспертиза РК' },
 ];
 
 const AUTOPLAY_INTERVAL = 7000;
@@ -157,7 +157,7 @@ const HeroSection = () => {
           >
             Проектируем как надо.
             <br />
-            <span className="text-secondary">Чтобы строить уверенно</span>
+            <span className="text-secondary italic">Чтобы строить уверенно</span>
           </motion.h1>
 
           {/* Subtitle */}
@@ -165,9 +165,10 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.15 }}
-            className="text-primary-foreground/80 text-base sm:text-lg max-w-lg leading-relaxed font-medium mb-6"
+            className="text-primary-foreground/80 text-base sm:text-lg max-w-lg leading-relaxed font-medium mb-7"
           >
             Создаём проекты, которые понятны, продуманы
+            <br />
             и доведены до результата в срок.
           </motion.p>
 
@@ -181,7 +182,7 @@ const HeroSection = () => {
             <ShieldCheck className="w-6 h-6 text-secondary flex-shrink-0 mt-0.5" />
             <p className="text-primary-foreground/90 text-sm sm:text-base font-medium leading-snug">
               Гарантируем системный контроль и полную
-              <br className="hidden sm:block" />
+              <br />
               прозрачность на каждом этапе
             </p>
           </motion.div>
@@ -197,14 +198,20 @@ const HeroSection = () => {
               <div key={index} className="flex items-center">
                 <div className="flex items-center gap-2">
                   <stat.icon className="w-5 h-5 text-secondary flex-shrink-0" />
-                  <div className="flex items-baseline gap-1.5">
-                    <span className="text-primary-foreground font-extrabold text-xl sm:text-2xl leading-none">
-                      {stat.value}
-                    </span>
-                    <span className="text-primary-foreground/70 text-xs sm:text-sm font-medium">
+                  {stat.value ? (
+                    <div className="flex items-baseline gap-1.5">
+                      <span className="text-primary-foreground font-extrabold text-xl sm:text-2xl leading-none">
+                        {stat.value}
+                      </span>
+                      <span className="text-primary-foreground/70 text-xs sm:text-sm font-medium">
+                        {stat.label}
+                      </span>
+                    </div>
+                  ) : (
+                    <span className="text-primary-foreground font-bold text-sm sm:text-base">
                       {stat.label}
                     </span>
-                  </div>
+                  )}
                 </div>
                 {index < stats.length - 1 && (
                   <div className="w-px h-6 bg-primary-foreground/25 mx-4 sm:mx-5" />
@@ -218,21 +225,36 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.45 }}
-            className="flex flex-col sm:flex-row gap-3"
+            className="flex flex-col gap-3 max-w-md"
           >
-            <Button variant="gold" size="xl" asChild>
+            <Button variant="gold" size="xl" className="w-full justify-center" asChild>
               <a href="#contact">
                 <Calendar className="w-5 h-5" />
-                Рассчитать проект
-                <ArrowRight className="w-5 h-5" />
+                Получить расчёт проекта за 24 часа
               </a>
             </Button>
-            <Button variant="heroOutline" size="xl" asChild>
+            <Button variant="heroOutline" size="xl" className="w-full justify-center" asChild>
               <a href="#why-choose-us">
-                <Briefcase className="w-5 h-5" />
-                Смотреть кейсы
+                <FolderOpen className="w-5 h-5" />
+                Посмотреть реализованные объекты
               </a>
             </Button>
+          </motion.div>
+
+          {/* Warning block */}
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.55 }}
+            className="flex items-start gap-3 mt-7 max-w-md"
+          >
+            <AlertTriangle className="w-5 h-5 text-secondary flex-shrink-0 mt-0.5" />
+            <p className="text-primary-foreground/70 text-xs sm:text-sm leading-relaxed">
+              <span className="text-secondary font-bold">90% проблем</span>{' '}
+              на стройке — из-за ошибок в проекте.
+              <br />
+              Мы устраняем их до начала строительства.
+            </p>
           </motion.div>
         </div>
       </div>
