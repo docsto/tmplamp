@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, ShieldCheck, Calendar, Building2, CheckCircle2, Briefcase, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -37,6 +37,36 @@ const stats = [{
   label: 'экспертиз'
 }];
 const AUTOPLAY_INTERVAL = 7000;
+
+const CountUp = ({ value, suffix = '', duration = 2000 }: { value: number; suffix?: string; duration?: number }) => {
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+  const started = useRef(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !started.current) {
+          started.current = true;
+          const startTime = performance.now();
+          const animate = (now: number) => {
+            const elapsed = now - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            setCount(Math.round(eased * value));
+            if (progress < 1) requestAnimationFrame(animate);
+          };
+          requestAnimationFrame(animate);
+        }
+      },
+      { threshold: 0.5 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [value, duration]);
+
+  return <span ref={ref}>{count}{suffix}</span>;
+};
 
 const HeroSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -179,7 +209,11 @@ const HeroSection = () => {
                 <div className="flex items-center gap-2">
                   <stat.icon className="w-5 h-5 text-secondary flex-shrink-0" />
                   <div className="flex items-baseline gap-1.5">
-                    <span className="text-primary-foreground font-extrabold text-xl sm:text-2xl leading-none">{stat.value}</span>
+                    <span className="text-primary-foreground font-extrabold text-xl sm:text-2xl leading-none">
+                      {stat.value === '13' && <CountUp value={13} />}
+                      {stat.value === '350+' && <><CountUp value={350} suffix="+" /></>}
+                      {stat.value === '100%' && <CountUp value={100} suffix="%" />}
+                    </span>
                     <span className="text-primary-foreground/70 text-xs sm:text-sm font-medium">{stat.label}</span>
                   </div>
                 </div>
