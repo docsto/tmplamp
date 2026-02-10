@@ -124,7 +124,7 @@ const HeroSection = () => {
         }}>  Проектируем как надо
 Чтобы строить уверенно<br />
             <span className="font-bold text-[#c2f4ff] text-justify text-4xl">  Проектируем как надо
-  Чтобы строить уверенно</span>
+Чтобы строить уверенно</span>
           </motion.h1>
 
           {/* Subtitle */}
