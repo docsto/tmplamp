@@ -139,13 +139,22 @@ const HeroSection = () => {
             initial={{ opacity: 0, scaleX: 0 }}
             animate={{ opacity: 1, scaleX: 1 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="origin-left h-[1px] max-w-md my-5"
-            style={{
-              background: 'linear-gradient(90deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.2) 50%, transparent 100%)',
-              boxShadow: '0 0 8px rgba(255,255,255,0.12), 0 0 2px rgba(255,255,255,0.08)',
-              backdropFilter: 'blur(4px)',
-            }}
-          />
+            className="origin-center max-w-md my-5 relative"
+            style={{ height: '2px' }}
+          >
+            <div className="absolute inset-0 rounded-full" style={{
+              background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.15) 15%, rgba(255,255,255,0.7) 45%, rgba(255,255,255,0.9) 50%, rgba(255,255,255,0.7) 55%, rgba(255,255,255,0.15) 85%, transparent 100%)',
+            }} />
+            <div className="absolute inset-0 rounded-full" style={{
+              background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.05) 20%, rgba(255,255,255,0.4) 45%, rgba(255,255,255,0.5) 50%, rgba(255,255,255,0.4) 55%, rgba(255,255,255,0.05) 80%, transparent 100%)',
+              filter: 'blur(4px)',
+            }} />
+            <div className="absolute rounded-full" style={{
+              top: '-2px', left: '30%', right: '30%', height: '6px',
+              background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.15) 30%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,0.15) 70%, transparent)',
+              filter: 'blur(6px)',
+            }} />
+          </motion.div>
 
           {/* Subtitle */}
           <motion.p initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.15 }} className="text-primary-foreground/80 text-base sm:text-lg max-w-lg leading-relaxed font-medium mb-6">
