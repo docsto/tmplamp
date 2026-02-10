@@ -34,7 +34,7 @@ const stats = [{
 }, {
   icon: CheckCircle2,
   value: '100%',
-  label: 'положительных экспертиз'
+  label: 'экспертиз'
 }];
 const AUTOPLAY_INTERVAL = 7000;
 
@@ -159,7 +159,7 @@ const HeroSection = () => {
           {/* Subtitle */}
           <motion.p initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.15 }} className="text-primary-foreground/80 text-base sm:text-lg max-w-lg leading-relaxed font-medium mb-6">
             Создаём проекты, которые понятны, продуманы
-            и доведены до результата в срок.
+            и&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;доведены до результата в срок
           </motion.p>
 
           {/* Guarantee line */}
