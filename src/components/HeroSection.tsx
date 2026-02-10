@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import heroImage1 from '@/assets/hero-construction-site.jpg';
 import heroVideo from '@/assets/hero-construction-video.mp4';
 import heroImage2 from '@/assets/hero-construction.jpg';
+
 type Slide = {
   type: 'image' | 'video';
   src: string;
@@ -36,11 +37,13 @@ const stats = [{
   label: 'положительных экспертиз'
 }];
 const AUTOPLAY_INTERVAL = 7000;
+
 const HeroSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [direction, setDirection] = useState(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
+
   const resetTimer = useCallback(() => {
     if (timerRef.current) clearInterval(timerRef.current);
     timerRef.current = setInterval(() => {
@@ -48,17 +51,20 @@ const HeroSection = () => {
       setCurrentSlide(prev => (prev + 1) % slides.length);
     }, AUTOPLAY_INTERVAL);
   }, []);
+
   useEffect(() => {
     resetTimer();
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
   }, [resetTimer]);
+
   const goToSlide = useCallback((dir: 1 | -1) => {
     setDirection(dir);
     setCurrentSlide(prev => (prev + dir + slides.length) % slides.length);
     resetTimer();
   }, [resetTimer]);
+
   const slideVariants = {
     enter: (dir: number) => ({
       x: dir > 0 ? '100%' : '-100%',
@@ -73,21 +79,25 @@ const HeroSection = () => {
       opacity: 0
     })
   };
-  return <section className="relative min-h-[90vh] flex items-center overflow-hidden">
+
+  return (
+    <section className="relative min-h-[90vh] flex items-center overflow-hidden">
       {/* Slide backgrounds */}
       <AnimatePresence initial={false} custom={direction} mode="popLayout">
         <motion.div key={currentSlide} custom={direction} variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{
-        duration: 0.7,
-        ease: [0.4, 0, 0.2, 1]
-      }} className="absolute inset-0">
-          {slides[currentSlide].type === 'image' ? <img src={slides[currentSlide].src} alt={slides[currentSlide].alt || ''} className="absolute inset-0 w-full h-full object-cover" /> : <video ref={videoRef} src={slides[currentSlide].src} autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover" />}
+          duration: 0.7,
+          ease: [0.4, 0, 0.2, 1]
+        }} className="absolute inset-0">
+          {slides[currentSlide].type === 'image' ? (
+            <img src={slides[currentSlide].src} alt={slides[currentSlide].alt || ''} className="absolute inset-0 w-full h-full object-cover" />
+          ) : (
+            <video ref={videoRef} src={slides[currentSlide].src} autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover" />
+          )}
         </motion.div>
       </AnimatePresence>
 
-      {/* Blueprint overlay — left side */}
+      {/* Blueprint overlay */}
       <div className="absolute inset-0 blueprint-overlay z-[1]" />
-
-      {/* Blueprint grid pattern */}
       <div className="absolute inset-0 blueprint-grid opacity-[0.12] z-[1]" />
 
       {/* Slide navigation arrows */}
@@ -100,58 +110,51 @@ const HeroSection = () => {
 
       {/* Slide indicators */}
       <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-2.5">
-        {slides.map((_, index) => <button key={index} onClick={() => {
-        setDirection(index > currentSlide ? 1 : -1);
-        setCurrentSlide(index);
-        resetTimer();
-      }} className={`h-1.5 rounded-full transition-all duration-500 ${index === currentSlide ? 'w-10 bg-secondary' : 'w-4 bg-primary-foreground/40 hover:bg-primary-foreground/60'}`} aria-label={`Слайд ${index + 1}`} />)}
+        {slides.map((_, index) => (
+          <button key={index} onClick={() => {
+            setDirection(index > currentSlide ? 1 : -1);
+            setCurrentSlide(index);
+            resetTimer();
+          }} className={`h-1.5 rounded-full transition-all duration-500 ${index === currentSlide ? 'w-10 bg-secondary' : 'w-4 bg-primary-foreground/40 hover:bg-primary-foreground/60'}`} aria-label={`Слайд ${index + 1}`} />
+        ))}
       </div>
 
-      {/* Content */}
-      <div className="container px-4 sm:px-6 lg:px-8 relative z-10 py-16 lg:py-0 mx-0">
-        <div className="max-w-2xl px-[10px] mx-[9px]">
+      {/* Content — positioned 10px right of the left slider arrow */}
+      <div className="relative z-10 py-16 lg:py-0 pl-[70px] md:pl-[86px] pr-4 sm:pr-6 lg:pr-8">
+        <div className="max-w-2xl">
           {/* Main Heading */}
-          <motion.h1 initial={{
-          opacity: 0,
-          y: 20
-        }} animate={{
-          opacity: 1,
-          y: 0
-        }} transition={{
-          duration: 0.6
-        }} className="text-4xl md:text-5xl text-primary-foreground leading-[1.1] mb-5 font-bold py-[10px] px-[2px] text-left lg:text-4xl mx-0 pr-0 pb-[11px] pt-[9px] pl-0" style={{
-          fontFamily: "'Montserrat', sans-serif"
-        }}>  Проектируем как надо
-Чтобы строить уверенно<br />
-            <span className="font-bold text-[#c2f4ff] text-justify text-4xl">Чтобы строить уверенно</span>
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-4xl md:text-5xl text-primary-foreground leading-[1.1] mb-0 font-bold text-left lg:text-4xl"
+            style={{ fontFamily: "'Montserrat', sans-serif" }}
+          >
+            Проектируем как надо<br />
+            <span className="font-bold text-secondary">Чтобы строить уверенно</span>
           </motion.h1>
 
+          {/* Glass horizontal line */}
+          <motion.div
+            initial={{ opacity: 0, scaleX: 0 }}
+            animate={{ opacity: 1, scaleX: 1 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="origin-left h-[1px] max-w-md my-5"
+            style={{
+              background: 'linear-gradient(90deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.2) 50%, transparent 100%)',
+              boxShadow: '0 0 8px rgba(255,255,255,0.12), 0 0 2px rgba(255,255,255,0.08)',
+              backdropFilter: 'blur(4px)',
+            }}
+          />
+
           {/* Subtitle */}
-          <motion.p initial={{
-          opacity: 0,
-          y: 15
-        }} animate={{
-          opacity: 1,
-          y: 0
-        }} transition={{
-          duration: 0.6,
-          delay: 0.15
-        }} className="text-primary-foreground/80 text-base sm:text-lg max-w-lg leading-relaxed font-medium mb-6">
+          <motion.p initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.15 }} className="text-primary-foreground/80 text-base sm:text-lg max-w-lg leading-relaxed font-medium mb-6">
             Создаём проекты, которые понятны, продуманы
             и доведены до результата в срок.
           </motion.p>
 
           {/* Guarantee line */}
-          <motion.div initial={{
-          opacity: 0,
-          y: 15
-        }} animate={{
-          opacity: 1,
-          y: 0
-        }} transition={{
-          duration: 0.6,
-          delay: 0.25
-        }} className="flex items-start gap-3 mb-6">
+          <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.25 }} className="flex items-start gap-3 mb-6">
             <ShieldCheck className="w-6 h-6 text-secondary flex-shrink-0 mt-0.5" />
             <p className="text-primary-foreground/90 text-sm sm:text-base font-medium leading-snug">
               Гарантируем системный контроль и полную
@@ -160,44 +163,24 @@ const HeroSection = () => {
             </p>
           </motion.div>
 
-          {/* Stats Row — inline with dividers */}
-          <motion.div initial={{
-          opacity: 0,
-          y: 15
-        }} animate={{
-          opacity: 1,
-          y: 0
-        }} transition={{
-          duration: 0.6,
-          delay: 0.35
-        }} className="flex flex-wrap items-center gap-x-0 gap-y-3 mb-7">
-            {stats.map((stat, index) => <div key={index} className="flex items-center">
+          {/* Stats Row */}
+          <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.35 }} className="flex flex-wrap items-center gap-x-0 gap-y-3 mb-7">
+            {stats.map((stat, index) => (
+              <div key={index} className="flex items-center">
                 <div className="flex items-center gap-2">
                   <stat.icon className="w-5 h-5 text-secondary flex-shrink-0" />
                   <div className="flex items-baseline gap-1.5">
-                    <span className="text-primary-foreground font-extrabold text-xl sm:text-2xl leading-none">
-                      {stat.value}
-                    </span>
-                    <span className="text-primary-foreground/70 text-xs sm:text-sm font-medium">
-                      {stat.label}
-                    </span>
+                    <span className="text-primary-foreground font-extrabold text-xl sm:text-2xl leading-none">{stat.value}</span>
+                    <span className="text-primary-foreground/70 text-xs sm:text-sm font-medium">{stat.label}</span>
                   </div>
                 </div>
                 {index < stats.length - 1 && <div className="w-px h-6 bg-primary-foreground/25 mx-4 sm:mx-5" />}
-              </div>)}
+              </div>
+            ))}
           </motion.div>
 
           {/* CTA Buttons */}
-          <motion.div initial={{
-          opacity: 0,
-          y: 15
-        }} animate={{
-          opacity: 1,
-          y: 0
-        }} transition={{
-          duration: 0.6,
-          delay: 0.45
-        }} className="flex flex-col sm:flex-row gap-3">
+          <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.45 }} className="flex flex-col sm:flex-row gap-3">
             <Button variant="gold" size="xl" asChild>
               <a href="#contact">
                 <Calendar className="w-5 h-5" />
@@ -214,6 +197,8 @@ const HeroSection = () => {
           </motion.div>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default HeroSection;
