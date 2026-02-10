@@ -130,8 +130,8 @@ const HeroSection = () => {
             className="text-4xl md:text-5xl text-primary-foreground leading-[1.1] mb-0 font-bold text-left lg:text-4xl"
             style={{ fontFamily: "'Montserrat', sans-serif" }}
           >
-            Проектируем как надо<br />
-            <span className="font-bold text-secondary">Чтобы строить уверенно</span>
+            &nbsp;&nbsp;Проектируем как надо<br />
+            <span className="font-bold" style={{ color: '#C4F4FF' }}>Чтобы строить уверенно</span>
           </motion.h1>
 
           {/* Glass horizontal line */}
