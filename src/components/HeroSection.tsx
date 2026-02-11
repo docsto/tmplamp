@@ -1,42 +1,81 @@
-import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, ShieldCheck, Calendar, Building2, CheckCircle2, Briefcase, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight, Calendar, Briefcase, CheckCircle2, Building2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import heroImage1 from '@/assets/hero-construction-site.jpg';
-import heroVideo from '@/assets/hero-construction-video.mp4';
 import heroImage2 from '@/assets/hero-construction.jpg';
 
-type Slide = {
-  type: 'image' | 'video';
-  src: string;
-  alt?: string;
-};
-const slides: Slide[] = [{
-  type: 'image',
-  src: heroImage1,
-  alt: 'Строительная площадка'
-}, {
-  type: 'video',
-  src: heroVideo
-}, {
-  type: 'image',
-  src: heroImage2,
-  alt: 'Строительный объект'
-}];
-const stats = [{
-  icon: CheckCircle2,
-  value: '13',
-  label: 'лет на рынке'
-}, {
-  icon: Building2,
-  value: '350+',
-  label: 'проектов'
-}, {
-  icon: CheckCircle2,
-  value: '100%',
-  label: 'экспертиз'
-}];
-const AUTOPLAY_INTERVAL = 7000;
+const textSlides = [
+  {
+    line1: '\u00A0\u00A0Проектируем как надо',
+    line2: 'Чтобы строить уверенно',
+  },
+  {
+    line1: 'Создаём проекты, которые',
+    line2: 'понятны, продуманы и\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0доведены до результата в срок',
+  },
+  {
+    line1: 'Гарантируем системный',
+    line2: 'контроль и полную прозрачность на каждом этапе',
+  },
+];
+
+const stats = [
+  { icon: CheckCircle2, value: 13, suffix: '', label: 'лет на рынке' },
+  { icon: Building2, value: 350, suffix: '+', label: 'проектов' },
+  { icon: CheckCircle2, value: 100, suffix: '%', label: 'экспертиз' },
+];
+
+const SLIDE_INTERVAL = 6000;
+
+// Blueprint SVG paths — architectural drawing elements
+const blueprintPaths = [
+  // Building outline
+  'M 80 420 L 80 180 L 200 120 L 320 180 L 320 420',
+  'M 80 420 L 320 420',
+  // Roof
+  'M 60 180 L 200 100 L 340 180',
+  // Windows
+  'M 120 220 L 180 220 L 180 280 L 120 280 Z',
+  'M 220 220 L 280 220 L 280 280 L 220 280 Z',
+  // Door
+  'M 170 420 L 170 330 L 230 330 L 230 420',
+  // Floor lines
+  'M 80 320 L 320 320',
+  // Dimension lines
+  'M 60 440 L 340 440',
+  'M 60 435 L 60 445',
+  'M 340 435 L 340 445',
+  // Second building (background)
+  'M 380 420 L 380 240 L 480 200 L 580 240 L 580 420',
+  'M 380 420 L 580 420',
+  'M 360 240 L 480 180 L 600 240',
+  // Windows second building
+  'M 410 270 L 450 270 L 450 310 L 410 310 Z',
+  'M 510 270 L 550 270 L 550 310 L 510 310 Z',
+  'M 410 340 L 450 340 L 450 380 L 410 380 Z',
+  'M 510 340 L 550 340 L 550 380 L 510 380 Z',
+  // Crane
+  'M 500 420 L 500 60',
+  'M 460 60 L 650 60',
+  'M 500 60 L 500 40 L 510 40 L 510 60',
+  'M 640 60 L 620 120',
+  // Ground line
+  'M 20 420 L 680 420',
+  // Dimension annotations
+  'M 200 450 L 200 460',
+  'M 120 450 L 120 460',
+  'M 280 450 L 280 460',
+];
+
+const blueprintLabels = [
+  { x: 190, y: 475, text: '12.0m' },
+  { x: 140, y: 300, text: 'A-1' },
+  { x: 250, y: 300, text: 'A-2' },
+  { x: 470, y: 300, text: 'B-1' },
+  { x: 190, y: 145, text: '∠35°' },
+  { x: 500, y: 50, text: 'КР-1' },
+];
 
 const CountUp = ({ value, suffix = '', duration = 2000 }: { value: number; suffix?: string; duration?: number }) => {
   const [count, setCount] = useState(0);
@@ -70,106 +109,172 @@ const CountUp = ({ value, suffix = '', duration = 2000 }: { value: number; suffi
 
 const HeroSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [direction, setDirection] = useState(0);
+  const [blueprintPhase, setBlueprintPhase] = useState<'drawing' | 'transforming' | 'photo'>('drawing');
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
 
-  const resetTimer = useCallback(() => {
-    if (timerRef.current) clearInterval(timerRef.current);
+  // Auto-cycle text slides
+  useEffect(() => {
     timerRef.current = setInterval(() => {
-      setDirection(1);
-      setCurrentSlide(prev => (prev + 1) % slides.length);
-    }, AUTOPLAY_INTERVAL);
+      setCurrentSlide(prev => (prev + 1) % textSlides.length);
+    }, SLIDE_INTERVAL);
+    return () => { if (timerRef.current) clearInterval(timerRef.current); };
   }, []);
 
+  // Blueprint animation phases
   useEffect(() => {
-    resetTimer();
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
-  }, [resetTimer]);
-
-  const goToSlide = useCallback((dir: 1 | -1) => {
-    setDirection(dir);
-    setCurrentSlide(prev => (prev + dir + slides.length) % slides.length);
-    resetTimer();
-  }, [resetTimer]);
-
-  const slideVariants = {
-    enter: (dir: number) => ({
-      x: dir > 0 ? '100%' : '-100%',
-      opacity: 0
-    }),
-    center: {
-      x: 0,
-      opacity: 1
-    },
-    exit: (dir: number) => ({
-      x: dir > 0 ? '-100%' : '100%',
-      opacity: 0
-    })
-  };
+    // Phase 1: lines draw (0-2.5s)
+    // Phase 2: transform to photo (2.5-4s)
+    // Phase 3: photo visible
+    const t1 = setTimeout(() => setBlueprintPhase('transforming'), 2500);
+    const t2 = setTimeout(() => setBlueprintPhase('photo'), 4000);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
+  }, []);
 
   return (
-    <section className="relative min-h-[90vh] flex items-center overflow-hidden">
-      {/* Slide backgrounds */}
-      <AnimatePresence initial={false} custom={direction} mode="popLayout">
-        <motion.div key={currentSlide} custom={direction} variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{
-          duration: 0.7,
-          ease: [0.4, 0, 0.2, 1]
-        }} className="absolute inset-0">
-          {slides[currentSlide].type === 'image' ? (
-            <img src={slides[currentSlide].src} alt={slides[currentSlide].alt || ''} className="absolute inset-0 w-full h-full object-cover" />
-          ) : (
-            <video ref={videoRef} src={slides[currentSlide].src} autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover" />
-          )}
+    <section className="relative min-h-[100vh] flex items-center overflow-hidden bg-[hsl(var(--navy-dark))]">
+      {/* RIGHT SIDE — Photo with diagonal clip */}
+      <div
+        className="absolute inset-0 z-[1]"
+        style={{
+          clipPath: 'polygon(45% 0, 100% 0, 100% 100%, 55% 100%)',
+        }}
+      >
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: blueprintPhase === 'photo' ? 1 : blueprintPhase === 'transforming' ? 0.7 : 0.15 }}
+          transition={{ duration: 1.5, ease: 'easeInOut' }}
+          className="absolute inset-0"
+        >
+          <img
+            src={heroImage1}
+            alt="Готовый объект"
+            className="w-full h-full object-cover"
+          />
+          {/* Gradient overlay on photo side */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[hsl(var(--navy-dark))] via-transparent to-transparent opacity-60" />
         </motion.div>
-      </AnimatePresence>
-
-      {/* Blueprint overlay */}
-      <div className="absolute inset-0 blueprint-overlay z-[1]" />
-      <div className="absolute inset-0 blueprint-grid opacity-[0.12] z-[1]" />
-
-      {/* Slide navigation arrows */}
-      <button onClick={() => goToSlide(-1)} className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 w-11 h-11 flex items-center justify-center rounded-full bg-primary-foreground/10 backdrop-blur-sm border border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/20 transition-all duration-300 group" aria-label="Предыдущий слайд">
-        <ChevronLeft className="w-5 h-5 group-hover:scale-110 transition-transform" />
-      </button>
-      <button onClick={() => goToSlide(1)} className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 w-11 h-11 flex items-center justify-center rounded-full bg-primary-foreground/10 backdrop-blur-sm border border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/20 transition-all duration-300 group" aria-label="Следующий слайд">
-        <ChevronRight className="w-5 h-5 group-hover:scale-110 transition-transform" />
-      </button>
-
-      {/* Slide indicators */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-2.5">
-        {slides.map((_, index) => (
-          <button key={index} onClick={() => {
-            setDirection(index > currentSlide ? 1 : -1);
-            setCurrentSlide(index);
-            resetTimer();
-          }} className={`h-1.5 rounded-full transition-all duration-500 ${index === currentSlide ? 'w-10 bg-secondary' : 'w-4 bg-primary-foreground/40 hover:bg-primary-foreground/60'}`} aria-label={`Слайд ${index + 1}`} />
-        ))}
       </div>
 
-      {/* Content — positioned 10px right of the left slider arrow */}
-      <div className="relative z-10 py-16 lg:py-0 pl-[70px] md:pl-[86px] pr-4 sm:pr-6 lg:pr-8">
-        <div className="max-w-2xl">
-          {/* Main Heading */}
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-4xl md:text-5xl text-primary-foreground leading-[1.1] mb-0 font-bold text-left lg:text-4xl"
-            style={{ fontFamily: "'Montserrat', sans-serif" }}
-          >
-            &nbsp;&nbsp;Проектируем как надо<br />
-            <span className="font-bold" style={{ color: '#C4F4FF' }}>Чтобы строить уверенно</span>
-          </motion.h1>
+      {/* LEFT SIDE — Blueprint CAD */}
+      <div
+        className="absolute inset-0 z-[2]"
+        style={{
+          clipPath: 'polygon(0 0, 55% 0, 45% 100%, 0 100%)',
+        }}
+      >
+        {/* Blueprint background */}
+        <div className="absolute inset-0 bg-[hsl(220,60%,12%)]" />
 
-          {/* Glass horizontal line */}
+        {/* Grid pattern */}
+        <div
+          className="absolute inset-0 opacity-30"
+          style={{
+            backgroundImage:
+              'linear-gradient(hsl(200 80% 60% / 0.3) 1px, transparent 1px), linear-gradient(90deg, hsl(200 80% 60% / 0.3) 1px, transparent 1px), linear-gradient(hsl(200 80% 60% / 0.1) 1px, transparent 1px), linear-gradient(90deg, hsl(200 80% 60% / 0.1) 1px, transparent 1px)',
+            backgroundSize: '100px 100px, 100px 100px, 20px 20px, 20px 20px',
+          }}
+        />
+
+        {/* SVG Blueprint drawing */}
+        <motion.div
+          className="absolute inset-0 flex items-center justify-center"
+          animate={{ opacity: blueprintPhase === 'photo' ? 0.15 : 1 }}
+          transition={{ duration: 1.5 }}
+        >
+          <svg viewBox="0 0 700 520" className="w-full max-w-[600px] h-auto px-8" fill="none">
+            {blueprintPaths.map((d, i) => (
+              <motion.path
+                key={i}
+                d={d}
+                stroke="hsl(200, 80%, 65%)"
+                strokeWidth="1.5"
+                fill="none"
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{ pathLength: 1, opacity: blueprintPhase === 'photo' ? 0.3 : 1 }}
+                transition={{
+                  pathLength: { duration: 2, delay: i * 0.08, ease: 'easeInOut' },
+                  opacity: { duration: 0.5, delay: i * 0.08 },
+                }}
+              />
+            ))}
+            {/* Labels */}
+            {blueprintLabels.map((label, i) => (
+              <motion.text
+                key={i}
+                x={label.x}
+                y={label.y}
+                fill="hsl(200, 80%, 70%)"
+                fontSize="12"
+                fontFamily="monospace"
+                textAnchor="middle"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: blueprintPhase === 'photo' ? 0.2 : 0.8 }}
+                transition={{ duration: 0.5, delay: 1.5 + i * 0.15 }}
+              >
+                {label.text}
+              </motion.text>
+            ))}
+          </svg>
+        </motion.div>
+
+        {/* Second photo layer fading in during transform */}
+        <motion.div
+          className="absolute inset-0"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: blueprintPhase === 'photo' ? 0.85 : blueprintPhase === 'transforming' ? 0.4 : 0 }}
+          transition={{ duration: 1.5 }}
+        >
+          <img
+            src={heroImage2}
+            alt="Строительный процесс"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-[hsl(var(--navy-dark))] opacity-40" />
+        </motion.div>
+      </div>
+
+      {/* Diagonal edge glow */}
+      <div
+        className="absolute inset-0 z-[3] pointer-events-none"
+        style={{
+          background: 'linear-gradient(to right, transparent 44%, hsl(200 80% 65% / 0.15) 49%, hsl(200 80% 65% / 0.3) 50%, hsl(200 80% 65% / 0.15) 51%, transparent 56%)',
+          clipPath: 'polygon(45% 0, 55% 0, 45% 100%, 35% 100%)',
+        }}
+      />
+
+      {/* TEXT OVERLAY */}
+      <div className="relative z-10 w-full px-6 sm:px-10 md:px-16 lg:px-24">
+        <div className="max-w-2xl">
+          {/* Animated text slides */}
+          <div className="min-h-[140px] sm:min-h-[160px] mb-6">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentSlide}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.6 }}
+              >
+                <h1
+                  className="text-3xl sm:text-4xl md:text-5xl text-primary-foreground leading-[1.15] font-bold"
+                  style={{ fontFamily: "'Montserrat', sans-serif" }}
+                >
+                  {textSlides[currentSlide].line1}
+                  <br />
+                  <span style={{ color: '#C4F4FF' }}>
+                    {textSlides[currentSlide].line2}
+                  </span>
+                </h1>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* Glass line */}
           <motion.div
             initial={{ opacity: 0, scaleX: 0 }}
             animate={{ opacity: 1, scaleX: 1 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="origin-center max-w-md my-5 relative"
+            className="origin-left max-w-md mb-8 relative"
             style={{ height: '2px' }}
           >
             <div className="absolute inset-0 rounded-full" style={{
@@ -179,51 +284,15 @@ const HeroSection = () => {
               background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.05) 20%, rgba(255,255,255,0.4) 45%, rgba(255,255,255,0.5) 50%, rgba(255,255,255,0.4) 55%, rgba(255,255,255,0.05) 80%, transparent 100%)',
               filter: 'blur(4px)',
             }} />
-            <div className="absolute rounded-full" style={{
-              top: '-2px', left: '30%', right: '30%', height: '6px',
-              background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.15) 30%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,0.15) 70%, transparent)',
-              filter: 'blur(6px)',
-            }} />
-          </motion.div>
-
-          {/* Subtitle */}
-          <motion.p initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.15 }} className="text-primary-foreground/80 text-base sm:text-lg max-w-lg leading-relaxed font-medium mb-6">
-            Создаём проекты, которые понятны, продуманы
-            и&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;доведены до результата в срок
-          </motion.p>
-
-          {/* Guarantee line */}
-          <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.25 }} className="flex items-start gap-3 mb-6">
-            <ShieldCheck className="w-6 h-6 text-secondary flex-shrink-0 mt-0.5" />
-            <p className="text-primary-foreground/90 text-sm sm:text-base font-medium leading-snug">
-              Гарантируем системный контроль и полную
-              <br className="hidden sm:block" />
-              прозрачность на каждом этапе
-            </p>
-          </motion.div>
-
-          {/* Stats Row */}
-          <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.35 }} className="flex flex-wrap items-center gap-x-0 gap-y-3 mb-7">
-            {stats.map((stat, index) => (
-              <div key={index} className="flex items-center">
-                <div className="flex items-center gap-2">
-                  <stat.icon className="w-5 h-5 text-secondary flex-shrink-0" />
-                  <div className="flex items-baseline gap-1.5">
-                    <span className="text-primary-foreground font-extrabold text-xl sm:text-2xl leading-none">
-                      {stat.value === '13' && <CountUp value={13} />}
-                      {stat.value === '350+' && <><CountUp value={350} suffix="+" /></>}
-                      {stat.value === '100%' && <CountUp value={100} suffix="%" />}
-                    </span>
-                    <span className="text-primary-foreground/70 text-xs sm:text-sm font-medium">{stat.label}</span>
-                  </div>
-                </div>
-                {index < stats.length - 1 && <div className="w-px h-6 bg-primary-foreground/25 mx-4 sm:mx-5" />}
-              </div>
-            ))}
           </motion.div>
 
           {/* CTA Buttons */}
-          <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.45 }} className="flex flex-col sm:flex-row gap-3">
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+            className="flex flex-col sm:flex-row gap-3"
+          >
             <Button variant="gold" size="xl" asChild>
               <a href="#contact">
                 <Calendar className="w-5 h-5" />
@@ -232,13 +301,58 @@ const HeroSection = () => {
               </a>
             </Button>
             <Button variant="heroOutline" size="xl" asChild>
-              <a href="#why-choose-us">
+              <a href="#industrial-projects">
                 <Briefcase className="w-5 h-5" />
                 Смотреть кейсы
               </a>
             </Button>
           </motion.div>
         </div>
+      </div>
+
+      {/* BOTTOM STATS BAR */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.7 }}
+        className="absolute bottom-0 left-0 right-0 z-10 bg-[hsl(var(--navy-dark))]/80 backdrop-blur-md border-t border-white/10"
+      >
+        <div className="px-6 sm:px-10 md:px-16 lg:px-24 py-4">
+          <div className="flex flex-wrap items-center gap-x-0 gap-y-3">
+            {stats.map((stat, index) => (
+              <div key={index} className="flex items-center">
+                <div className="flex items-center gap-2">
+                  <stat.icon className="w-5 h-5 text-secondary flex-shrink-0" />
+                  <div className="flex items-baseline gap-1.5">
+                    <span className="text-primary-foreground font-extrabold text-xl sm:text-2xl leading-none">
+                      <CountUp value={stat.value} suffix={stat.suffix} />
+                    </span>
+                    <span className="text-primary-foreground/70 text-xs sm:text-sm font-medium">{stat.label}</span>
+                  </div>
+                </div>
+                {index < stats.length - 1 && <div className="w-px h-6 bg-primary-foreground/25 mx-4 sm:mx-5" />}
+              </div>
+            ))}
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Slide indicators */}
+      <div className="absolute bottom-20 left-6 sm:left-10 md:left-16 lg:left-24 z-20 flex gap-2.5">
+        {textSlides.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => {
+              setCurrentSlide(index);
+              if (timerRef.current) clearInterval(timerRef.current);
+              timerRef.current = setInterval(() => {
+                setCurrentSlide(prev => (prev + 1) % textSlides.length);
+              }, SLIDE_INTERVAL);
+            }}
+            className={`h-1.5 rounded-full transition-all duration-500 ${index === currentSlide ? 'w-10 bg-secondary' : 'w-4 bg-primary-foreground/40 hover:bg-primary-foreground/60'}`}
+            aria-label={`Слайд ${index + 1}`}
+          />
+        ))}
       </div>
     </section>
   );
