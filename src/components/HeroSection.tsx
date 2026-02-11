@@ -132,42 +132,30 @@ const HeroSection = () => {
 
   return (
     <section className="relative min-h-[100vh] flex items-center overflow-hidden bg-[hsl(var(--navy-dark))]">
-      {/* RIGHT SIDE — Photo with diagonal clip */}
+      {/* FULL BACKGROUND — Construction photo */}
+      <div className="absolute inset-0 z-[0]">
+        <img
+          src={heroImage1}
+          alt="Строительный объект"
+          className="w-full h-full object-cover"
+        />
+        {/* Slight dark overlay for text readability */}
+        <div className="absolute inset-0 bg-[hsl(var(--navy-dark))]/30" />
+      </div>
+
+      {/* LEFT SIDE — Blueprint overlay with diagonal clip */}
       <div
         className="absolute inset-0 z-[1]"
         style={{
-          clipPath: 'polygon(45% 0, 100% 0, 100% 100%, 55% 100%)',
+          clipPath: 'polygon(0 0, 60% 0, 40% 100%, 0 100%)',
         }}
       >
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: blueprintPhase === 'photo' ? 1 : blueprintPhase === 'transforming' ? 0.7 : 0.15 }}
-          transition={{ duration: 1.5, ease: 'easeInOut' }}
-          className="absolute inset-0"
-        >
-          <img
-            src={heroImage1}
-            alt="Готовый объект"
-            className="w-full h-full object-cover"
-          />
-          {/* Gradient overlay on photo side */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[hsl(var(--navy-dark))] via-transparent to-transparent opacity-60" />
-        </motion.div>
-      </div>
-
-      {/* LEFT SIDE — Blueprint CAD */}
-      <div
-        className="absolute inset-0 z-[2]"
-        style={{
-          clipPath: 'polygon(0 0, 55% 0, 45% 100%, 0 100%)',
-        }}
-      >
-        {/* Blueprint background */}
-        <div className="absolute inset-0 bg-[hsl(220,60%,12%)]" />
+        {/* Blue tint over photo */}
+        <div className="absolute inset-0 bg-[hsl(220,65%,18%)]/85" />
 
         {/* Grid pattern */}
         <div
-          className="absolute inset-0 opacity-30"
+          className="absolute inset-0 opacity-25"
           style={{
             backgroundImage:
               'linear-gradient(hsl(200 80% 60% / 0.3) 1px, transparent 1px), linear-gradient(90deg, hsl(200 80% 60% / 0.3) 1px, transparent 1px), linear-gradient(hsl(200 80% 60% / 0.1) 1px, transparent 1px), linear-gradient(90deg, hsl(200 80% 60% / 0.1) 1px, transparent 1px)',
@@ -178,7 +166,7 @@ const HeroSection = () => {
         {/* SVG Blueprint drawing */}
         <motion.div
           className="absolute inset-0 flex items-center justify-center"
-          animate={{ opacity: blueprintPhase === 'photo' ? 0.15 : 1 }}
+          animate={{ opacity: blueprintPhase === 'photo' ? 0.25 : 1 }}
           transition={{ duration: 1.5 }}
         >
           <svg viewBox="0 0 700 520" className="w-full max-w-[600px] h-auto px-8" fill="none">
@@ -190,14 +178,13 @@ const HeroSection = () => {
                 strokeWidth="1.5"
                 fill="none"
                 initial={{ pathLength: 0, opacity: 0 }}
-                animate={{ pathLength: 1, opacity: blueprintPhase === 'photo' ? 0.3 : 1 }}
+                animate={{ pathLength: 1, opacity: blueprintPhase === 'photo' ? 0.3 : 0.9 }}
                 transition={{
                   pathLength: { duration: 2, delay: i * 0.08, ease: 'easeInOut' },
                   opacity: { duration: 0.5, delay: i * 0.08 },
                 }}
               />
             ))}
-            {/* Labels */}
             {blueprintLabels.map((label, i) => (
               <motion.text
                 key={i}
@@ -208,7 +195,7 @@ const HeroSection = () => {
                 fontFamily="monospace"
                 textAnchor="middle"
                 initial={{ opacity: 0 }}
-                animate={{ opacity: blueprintPhase === 'photo' ? 0.2 : 0.8 }}
+                animate={{ opacity: blueprintPhase === 'photo' ? 0.2 : 0.7 }}
                 transition={{ duration: 0.5, delay: 1.5 + i * 0.15 }}
               >
                 {label.text}
@@ -217,11 +204,11 @@ const HeroSection = () => {
           </svg>
         </motion.div>
 
-        {/* Second photo layer fading in during transform */}
+        {/* Photo bleeding through on left after transform */}
         <motion.div
           className="absolute inset-0"
           initial={{ opacity: 0 }}
-          animate={{ opacity: blueprintPhase === 'photo' ? 0.85 : blueprintPhase === 'transforming' ? 0.4 : 0 }}
+          animate={{ opacity: blueprintPhase === 'photo' ? 0.6 : blueprintPhase === 'transforming' ? 0.3 : 0 }}
           transition={{ duration: 1.5 }}
         >
           <img
@@ -229,16 +216,16 @@ const HeroSection = () => {
             alt="Строительный процесс"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-[hsl(var(--navy-dark))] opacity-40" />
+          <div className="absolute inset-0 bg-[hsl(220,65%,18%)]/50" />
         </motion.div>
       </div>
 
-      {/* Diagonal edge glow */}
+      {/* Diagonal edge glow line */}
       <div
-        className="absolute inset-0 z-[3] pointer-events-none"
+        className="absolute inset-0 z-[2] pointer-events-none"
         style={{
-          background: 'linear-gradient(to right, transparent 44%, hsl(200 80% 65% / 0.15) 49%, hsl(200 80% 65% / 0.3) 50%, hsl(200 80% 65% / 0.15) 51%, transparent 56%)',
-          clipPath: 'polygon(45% 0, 55% 0, 45% 100%, 35% 100%)',
+          background: 'linear-gradient(to right, transparent 39%, hsl(200 80% 70% / 0.08) 44%, hsl(200 80% 75% / 0.25) 49.5%, hsl(200 80% 80% / 0.4) 50%, hsl(200 80% 75% / 0.25) 50.5%, hsl(200 80% 70% / 0.08) 56%, transparent 61%)',
+          clipPath: 'polygon(40% 0, 60% 0, 40% 100%, 20% 100%)',
         }}
       />
 
