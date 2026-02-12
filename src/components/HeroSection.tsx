@@ -139,7 +139,7 @@ const HeroSection = () => {
       </button>
 
       {/* Slide indicators */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-2.5">
+      <div className="absolute bottom-20 left-1/2 -translate-x-1/2 z-20 flex gap-2.5">
         {slides.map((_, index) => (
           <button key={index} onClick={() => {
             setDirection(index > currentSlide ? 1 : -1);
@@ -202,28 +202,8 @@ const HeroSection = () => {
             </p>
           </motion.div>
 
-          {/* Stats Row */}
-          <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.35 }} className="flex flex-wrap items-center gap-x-0 gap-y-3 mb-7">
-            {stats.map((stat, index) => (
-              <div key={index} className="flex items-center">
-                <div className="flex items-center gap-2">
-                  <stat.icon className="w-5 h-5 text-secondary flex-shrink-0" />
-                  <div className="flex items-baseline gap-1.5">
-                    <span className="text-primary-foreground font-extrabold text-xl sm:text-2xl leading-none">
-                      {stat.value === '13' && <CountUp value={13} />}
-                      {stat.value === '350+' && <><CountUp value={350} suffix="+" /></>}
-                      {stat.value === '100%' && <CountUp value={100} suffix="%" />}
-                    </span>
-                    <span className="text-primary-foreground/70 text-xs sm:text-sm font-medium">{stat.label}</span>
-                  </div>
-                </div>
-                {index < stats.length - 1 && <div className="w-px h-6 bg-primary-foreground/25 mx-4 sm:mx-5" />}
-              </div>
-            ))}
-          </motion.div>
-
           {/* CTA Buttons */}
-          <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.45 }} className="flex flex-col sm:flex-row gap-3">
+          <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.35 }} className="flex flex-col sm:flex-row gap-3">
             <Button variant="gold" size="xl" asChild>
               <a href="#contact">
                 <Calendar className="w-5 h-5" />
@@ -240,6 +220,32 @@ const HeroSection = () => {
           </motion.div>
         </div>
       </div>
+
+      {/* Stats Strip at bottom */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, delay: 0.5 }}
+        className="absolute bottom-0 left-0 right-0 z-20"
+        style={{
+          background: 'linear-gradient(90deg, rgba(0,50,153,0.85) 0%, rgba(0,50,153,0.6) 50%, rgba(0,50,153,0.4) 100%)',
+          backdropFilter: 'blur(8px)',
+          clipPath: 'polygon(0 30%, 100% 0%, 100% 100%, 0% 100%)',
+        }}
+      >
+        <div className="flex items-center justify-around max-w-5xl mx-auto py-6 pt-10 px-8">
+          {stats.map((stat, index) => (
+            <div key={index} className="flex items-baseline gap-2">
+              <span className="text-primary-foreground font-extrabold text-3xl sm:text-4xl md:text-5xl leading-none" style={{ fontFamily: "'Montserrat', sans-serif" }}>
+                {stat.value === '13' && <CountUp value={13} />}
+                {stat.value === '350+' && <CountUp value={350} suffix="+" />}
+                {stat.value === '100%' && <CountUp value={100} suffix="%" />}
+              </span>
+              <span className="text-primary-foreground/80 text-sm sm:text-base md:text-lg font-medium">{stat.label}</span>
+            </div>
+          ))}
+        </div>
+      </motion.div>
     </section>
   );
 };
